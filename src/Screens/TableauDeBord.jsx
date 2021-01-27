@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import * as Yup from "yup";
+
 import Form from "../Components/Forms/Form";
 import Field from "../Components/Forms/Field";
-import * as Yup from "yup";
-import Tasks from "../Components/Tasks";
 import SubmitButton from "../Components/Forms/SubmitButton";
+import UpdateAccountForm from "../Components/UpdateAccountForm";
+import Tasks from "../Components/Tasks";
 
 export default class TableauDeBord extends Component {
   state = {
@@ -42,6 +44,12 @@ export default class TableauDeBord extends Component {
         isOpened: true,
       },
     ],
+    updateAccount: false,
+  };
+  user = {
+    name: "William",
+    surname: "Pepin",
+    email: "william@gmail.com",
   };
 
   handleComplete = (task) => {
@@ -89,6 +97,7 @@ export default class TableauDeBord extends Component {
     title: Yup.string().required().max(127).label("Titre"),
     description: Yup.string().max(255).label("Description"),
   });
+
   handleSubmit = (values, actions) => {
     const task = {
       _id: 5,
@@ -101,6 +110,11 @@ export default class TableauDeBord extends Component {
     const tasks = [...this.state.tasks, task];
 
     this.setState({ tasks });
+  };
+
+  handleUpdateAccount = () => {
+    const updateAccount = this.state.updateAccount;
+    this.setState({ updateAccount: !updateAccount });
   };
 
   render() {
@@ -139,49 +153,36 @@ export default class TableauDeBord extends Component {
           </Form>
           <hr />
           <h3>Mon compte</h3>
-          <h6>William Pépin</h6>
-          <label>Email</label>
-          <p>William@gmail.com</p>
-          <label>Mot de passe</label>
-          <p>************</p>
-          <Form
-            initialValues={this.initialValues}
-            onSubmit={this.handleSubmit}
-            validationSchema={this.validationSchema}
-          >
-            <Field name="nom" type="text" label="Nom" placeholder="William" />
-            <Field
-              name="prenom"
-              type="text"
-              label="Prénom"
-              placeholder="Pépin"
-            />
-            <Field
-              type="email"
-              name="email"
-              label={"Courriel"}
-              placeholder="exemple@courriel.com"
-            />
-            <Field
-              type="password"
-              name="password"
-              label={"Mot de passe"}
-              placeholder="**************"
-            />
-            <Field
-              type="password"
-              name="confirmPassword"
-              label={"Confirmez votre mot de passe"}
-              placeholder="**************"
-            />
-            <button style={{ marginRight: "6px" }} className="btn btn-warning">
-              Annuler
-            </button>
-            <SubmitButton title="Modifier" />
-          </Form>
-          <button style={{ marginTop: "6px" }} className="btn btn-danger">
-            Modifier
-          </button>
+          {!this.state.updateAccount && (
+            <div>
+              <h6>
+                {this.user.name} {this.user.surname}
+              </h6>
+              <label>Email</label>
+              <p>{this.user.email}</p>
+              <label>Mot de passe</label>
+              <p>************</p>
+              <button
+                style={{ marginTop: "6px" }}
+                className="btn btn-danger"
+                onClick={this.handleUpdateAccount}
+              >
+                Modifier
+              </button>
+            </div>
+          )}
+          {this.state.updateAccount && (
+            <div>
+              <UpdateAccountForm user={this.user} />{" "}
+              <button
+                style={{ marginTop: "6px" }}
+                className="btn btn-warning"
+                onClick={this.handleUpdateAccount}
+              >
+                Annuler
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
