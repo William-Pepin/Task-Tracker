@@ -18,28 +18,29 @@ export default function Connexion() {
   });
 
   return (
-    <div className="card col-xl-4 col-md-8 col-sm-10" style={styles.card}>
-      <Form
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        <Field
-          name="email"
-          label={"Courriel"}
-          placeholder="exemple@courriel.com"
-        />
-        <Field
-          type="password"
-          name="password"
-          label={"Mot de passe"}
-          placeholder="**************"
-        />
-        <SubmitButton title="Se connecter"></SubmitButton>
-      </Form>
-      <Link style={styles.link} to="/inscription">
-        S'inscrire
-      </Link>
+    <div style={styles.page}>
+      <div className="card col-xl-5 col-md-8 col-11" style={styles.card}>
+        <h3>Connexion</h3>
+        <Form
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
+          <Field
+            name="email"
+            label={"Courriel"}
+            placeholder="exemple@courriel.com"
+          />
+          <Field
+            type="password"
+            name="password"
+            label={"Mot de passe"}
+            placeholder="**************"
+          />
+          <SubmitButton title="Se connecter"></SubmitButton>
+        </Form>
+        <Link to="/inscription">S'inscrire</Link>
+      </div>
     </div>
   );
 }
@@ -47,9 +48,10 @@ export default function Connexion() {
 const styles = {
   card: {
     padding: "2rem",
-    margin: "25vh auto",
+    margin: "auto",
   },
-  link: {
-    paddingLeft: "14px",
+  page: {
+    height: "100vh",
+    display: "flex",
   },
 };
