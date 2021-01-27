@@ -58,7 +58,7 @@ export default function Connexion() {
             label={"Confirmez votre mot de passe"}
             placeholder="**************"
           />
-          <SubmitButton title="S'inscrire"></SubmitButton>
+          <SubmitButton title="S'inscrire" />
         </Form>
         <Link to="/connexion">Se connecter ?</Link>
       </div>
