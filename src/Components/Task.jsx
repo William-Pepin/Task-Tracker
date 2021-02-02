@@ -45,12 +45,12 @@ export default function Task({
       </td>
       <td>
         <Icon
-          visible={!task.isFlagged && isOpen}
+          visible={!task.flagged && isOpen}
           onClick={() => onFlag(task)}
           className="fa fa-flag-o"
         />
         <Icon
-          visible={task.isFlagged}
+          visible={task.flagged}
           onClick={() => onFlag(task)}
           className="fa fa-flag"
         ></Icon>

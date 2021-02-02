@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import * as taskService from "../Services/taskService";
 import * as Yup from "yup";
 
 import Form from "../Components/Forms/Form";
@@ -9,82 +11,53 @@ import Tasks from "../Components/Tasks";
 
 export default class TableauDeBord extends Component {
   state = {
-    tasks: [
-      {
-        _id: 1,
-        fait: false,
-        title: "Faire de la nourriture pour la semaine",
-        description: "Description de la tache",
-        isFlagged: true,
-        priority: false,
-      },
-      {
-        _id: 2,
-        fait: false,
-        title: "Task 1",
-        description: "Description de la tache",
-        isFlagged: false,
-        priority: true,
-      },
-      {
-        _id: 3,
-        fait: false,
-        title: "Task 1",
-        description: "Description de la tache",
-        isFlagged: false,
-        priority: true,
-      },
-      {
-        _id: 4,
-        completed: false,
-        title: "Task 1",
-        description: "Description de la tache",
-        isFlagged: true,
-        priority: true,
-        isOpened: true,
-      },
-    ],
+    tasks: [],
     updateAccount: false,
   };
-  user = {
-    name: "William",
-    surname: "Pepin",
-    email: "william@gmail.com",
-  };
+  async componentDidMount() {
+    const response = await taskService.get();
+    this.setState({ tasks: response.data.data.tasks });
+  }
 
   handleComplete = (task) => {
+    task.completed = !task.completed;
     const tasks = this.state.tasks;
     const index = tasks.indexOf(task);
 
-    tasks[index] = { ...task, completed: !task.completed };
+    tasks[index] = { ...task };
 
     // Todo delay 5 sec et envoi a l'api ensuite
     this.setState({ tasks });
+    taskService.update(task);
   };
 
   handlePriority = (task) => {
+    task.priority = !task.priority;
     const tasks = this.state.tasks;
     const index = tasks.indexOf(task);
 
-    tasks[index] = { ...task, priority: !task.priority };
+    tasks[index] = { ...task };
 
     this.setState(tasks);
-    // Todo api call
+    taskService.update(task);
   };
 
   handleFlag = (task) => {
+    task.flagged = !task.flagged;
     const tasks = this.state.tasks;
     const index = tasks.indexOf(task);
 
-    tasks[index] = { ...task, isFlagged: !task.isFlagged };
+    tasks[index] = { ...task };
 
     this.setState(tasks);
-    // Todo api call
+    taskService.update(task);
   };
 
   handleDelete = (task) => {
     const tasks = this.state.tasks.filter((t) => t._id !== task._id);
     this.setState({ tasks });
+
+    taskService.del(task._id);
   };
 
   initialValues = {
@@ -98,23 +71,32 @@ export default class TableauDeBord extends Component {
     description: Yup.string().max(255).label("Description"),
   });
 
-  handleSubmit = (values, actions) => {
+  handleSubmit = async (values, actions) => {
     const task = {
-      _id: 5,
       title: values.title,
       description: values.description,
       completed: false,
-      isFlagged: false,
+      flagged: false,
       priority: false,
     };
     const tasks = [...this.state.tasks, task];
 
     this.setState({ tasks });
+    try {
+      const response = await taskService.post(task);
+      task._id = response.data.data.task._id;
+      tasks = [...this.state.tasks, task];
+      this.setState({ tasks });
+    } catch (e) {}
   };
 
   handleUpdateAccount = () => {
     const updateAccount = this.state.updateAccount;
     this.setState({ updateAccount: !updateAccount });
+  };
+
+  handleLogout = () => {
+    window.location = "/logout";
   };
 
   render() {
@@ -156,18 +138,18 @@ export default class TableauDeBord extends Component {
           {!this.state.updateAccount && (
             <div>
               <h6>
-                {this.user.name} {this.user.surname}
+                {this.props.user.name} {this.props.user.surname}
               </h6>
               <label>Email</label>
-              <p>{this.user.email}</p>
+              <p>{this.props.user.email}</p>
               <label>Mot de passe</label>
               <p>************</p>
               <button
                 style={{ marginTop: "6px" }}
                 className="btn btn-danger"
-                onClick={this.handleUpdateAccount}
+                onClick={this.handleLogout}
               >
-                Modifier
+                Déconnexion
               </button>
             </div>
           )}
