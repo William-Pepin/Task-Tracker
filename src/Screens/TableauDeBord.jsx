@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import * as taskService from "../Services/taskService";
 import * as Yup from "yup";
 
@@ -9,6 +8,10 @@ import SubmitButton from "../Components/Forms/SubmitButton";
 import UpdateAccountForm from "../Components/UpdateAccountForm";
 import Tasks from "../Components/Tasks";
 
+/**
+ * Composante définissant le tableau de bord
+ * Le tableau de bord permet de faire la gestion de toutes les états des tâches de l'application.
+ */
 export default class TableauDeBord extends Component {
   state = {
     tasks: [],
@@ -72,14 +75,14 @@ export default class TableauDeBord extends Component {
   });
 
   handleSubmit = async (values, actions) => {
-    const task = {
+    let task = {
       title: values.title,
       description: values.description,
       completed: false,
       flagged: false,
       priority: false,
     };
-    const tasks = [...this.state.tasks, task];
+    let tasks = [...this.state.tasks, task];
 
     this.setState({ tasks });
     try {

@@ -1,5 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+/**
+ * Module permettant d'utiliser axios avec un interceptor par défaut pour toutes les services de l'application
+ */
+
 
 axios.defaults.headers.common["x-auth-token"] = localStorage.getItem("token");
 

@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * Composante qui défini l'écran d'erreur 404
+ */
 export default function Invalide({ history }) {
   return (
     <div style={styles.page}>

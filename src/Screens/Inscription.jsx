@@ -9,7 +9,10 @@ import Form from "../Components/Forms/Form";
 import Field from "../Components/Forms/Field";
 import SubmitButton from "../Components/Forms/SubmitButton";
 
-export default function Connexion({ history }) {
+/**
+ * Composante qui défini l'écran d'inscription
+ */
+export default function Inscription() {
   const initialValues = {
     name: "",
     surname: "",
