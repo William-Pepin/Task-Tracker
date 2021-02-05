@@ -4,6 +4,10 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+/**
+ * Route permettant d'obtenir toutes les tâches d'un utilisateur
+ * Authentifie l'utilisateur via le Middleware "auth" avant de retourner toutes les tâches
+ */
 router.get("/", auth, async (req, res) => {
   try {
     const results = await db.query("SELECT * FROM tasks WHERE user_id = $1", [
@@ -23,6 +27,10 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+/**
+ * Route permettant d'obtenir une tâche spécifique dans la base de données
+ * Authentifie l'utilisateur via le Middleware "auth" avant de retourner la tâche.
+ */
 router.get("/:_id", auth, async (req, res) => {
   try {
     const _id = req.params._id;
@@ -48,6 +56,10 @@ router.get("/:_id", auth, async (req, res) => {
   }
 });
 
+/**
+ * Route permettant d'ajouter une tâche à la base de données
+ * Authentifie l'utilisateur via le Middleware "auth" avant d'ajouter la tâche
+ */
 router.post("/", auth, async (req, res) => {
   if (!req.body)
     return res.status(400).send("Body is empty or not a JSON format.");
@@ -87,6 +99,11 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+
+/**
+ * Route permettant de modifier une tâche dans la base de données
+ * Authentifie l'utilisateur via le Middleware "auth" avant de modifier la tâche
+ */
 router.put("/:_id", auth, async (req, res) => {
   const _id = req.params._id;
   if (!req.body)
@@ -127,6 +144,10 @@ router.put("/:_id", auth, async (req, res) => {
   }
 });
 
+/**
+ * Route permettant d'obtenir de supprimer une tâche 
+ * Authentifie l'utilisateur via le Middleware "auth" avant de supprimer la tâche
+ */
 router.delete("/:_id", auth, async (req, res) => {
   try {
     const result = await db.query("DELETE FROM tasks WHERE _id = $1 ", [

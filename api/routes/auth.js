@@ -6,6 +6,13 @@ const router = express.Router();
 const db = require("../db");
 const { User } = require("../models/user");
 
+
+/**
+ * Route permettant d'authentifier un utilisateur dans l'application
+ * Utilise la route /auth pour valider les informations de l'utilisateur.
+ * Valide si l'utilisateur est dans la base de données, si il est présent, il
+ * utilise le paquet bcrypt pour "hash" le mot de passe et le comparer à celui * dans la base de données.
+ */
 router.post("/", async (req, res) => {
   if (!req.body)
     return res.status(400).send("Body is empty or not a JSON format.");
@@ -41,12 +48,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-function validate(req) {
+/**
+ * Fonction permettant de valider si le courriel et le mot de passe.
+ * Utilise le paquet Joi pour effectuer la validation.
+ * @param {*} body corps de la requête
+ */
+function validate(body) {
   const schema = Joi.object({
     email: Joi.string().min(5).max(125).required().email(),
     password: Joi.string().min(5).max(255).required(),
   });
-  return schema.validate(req);
+  return schema.validate(body);
 }
 
 module.exports = router;

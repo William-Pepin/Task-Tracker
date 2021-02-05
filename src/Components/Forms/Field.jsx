@@ -5,15 +5,14 @@ import Help from "./FieldHelp";
 import Error from "./FieldError";
 
 /**
- * @Date 2020-02-10
- * @Author William Pépin
  * @Desc Composante définissant un champ de texte dans un formulaire formik.
  * @param {string} name Nom du champ du formulaire
- * @param width Largeur du champ
  * @param otherProps Toutes autres propriétés s'appliquant au TextInput de React-Native.
  * @param label Le libellé du champ, si déclaré, affiche un libellé au dessus du champ.
+ * @param help L'aide du champ, si déclaré, affiche une message d'aide en dessous du champ.
+ * @param placeholder Permet d'ajouter un message à l'intérieur du champ
  * @param description La description détaillé du champ, si elle est déclaré, elle affiche un icône d'informations avec la description lors du clic.
- * @returns Un AppText comme label, un AppTextInput comme saisi avec un AppErrorMessage fonctionnant dans le contexte d'un formulaire formik.
+ * @returns Un champ de formulaire bootstrap fonctionnant dans un contexte de formulaire Formik.
  */
 export default function Field({
   name,

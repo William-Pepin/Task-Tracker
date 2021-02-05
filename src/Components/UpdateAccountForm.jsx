@@ -1,11 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 
 import Form from "../Components/Forms/Form";
 import Field from "../Components/Forms/Field";
 import SubmitButton from "../Components/Forms/SubmitButton";
 
+/**
+ * Composante fonctionnelle permettant d'afficher le formulaire pour mettre à jour les informations de l'utilisateur
+ * @param {Object} user utilisateur à modifier dans le formulaire
+ *
+ */
 export default function Connexion({ user }) {
   const initialValues = {
     name: user.name,
@@ -71,14 +75,3 @@ export default function Connexion({ user }) {
     </Form>
   );
 }
-
-const styles = {
-  card: {
-    padding: "2rem",
-    margin: "auto",
-  },
-  page: {
-    height: "100vh",
-    display: "flex",
-  },
-};

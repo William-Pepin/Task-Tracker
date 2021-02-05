@@ -6,6 +6,10 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+/**
+ * Route permettant d'enregister un utilisateur dans la base de données
+ * Retourne un jeton d'authentification pour procéder dans l'application
+ */
 router.post("/", async (req, res) => {
   if (!req.body)
     return res.status(400).send("Body is empty or not a JSON format.");
