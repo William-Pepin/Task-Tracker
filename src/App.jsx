@@ -9,6 +9,13 @@ import TableauDeBord from "./Screens/TableauDeBord";
 import Invalide from "./Screens/Invalide";
 import Logout from "./Components/Logout";
 
+/**
+ * Composante principale de l'application.
+ * Permet de gérer les routes de l'application et les composantes
+ * d'écrans de l'application.
+ * Permet d'aller rechercher le jeton d'authentification afin de l'utiliser
+ * dans les différentes composantes de l'application.
+ */
 export default class App extends React.Component {
   state = {
     user: () => {
